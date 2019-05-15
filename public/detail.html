@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Members</title>
+  <link href="assets/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="navbar navbar-dark navbar-expand-sm bg-dark shadow-sm">
+      <div class="container">
+        <a href="#" class="navbar-brand d-flex justify-content-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="#">Members</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <section id="section" class="jumbotron mb-0 bg-white text-center">
+     
+    </section>
+
+    <div class="py-5 bg-light">
+      <div class="container">
+        <p>Other information about this member...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-5 text-muted">
+    <p class="container">
+      <span>this demo &copy; heima
+      <a class="float-right" href="#">Back to top &uparrow;</a>
+    </p>
+  </footer>
+</body>
+  <script src="./assets/jquery.js"></script>
+  <script src="./assets/template-web.js"></script>
+  <script id="tmp" type="text/html">
+  
+    <div class="container">
+        <img class="img-thumbnail mb-2 rounded-circle" src="{{ avatar }}" alt="heima" width="128">
+        <h1 class="display-4">{{ name}}</h1>
+        <p class="lead text-muted">{{ bio }}</p>
+        <div>
+          <a href="#" class="btn btn-primary my-2">Edit</a>
+          <a href="#" class="btn btn-danger my-2">Delete</a>
+        </div>
+      </div>
+
+  
+  </script>
+  <script>
+    //获取id 
+    let querystring = window.location.search
+    //去掉问号
+    querystring = querystring.replace('?','')
+    //去掉等号 转为对象
+    let arr = querystring.split('=')
+    let obj = {}
+    obj[arr[0]]= arr[1]
+    // console.log(obj);
+    $.ajax({
+      type:'get',
+      url:'/api/member-detail',
+      data:obj,
+      success:res=>{
+        // console.log(res);
+        let html = template('tmp',res)
+        $('#section').html(html)
+      }
+    })
+    
+  
+  </script>
+</html>
+  

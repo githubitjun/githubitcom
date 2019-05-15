@@ -1,0 +1,19 @@
+.card {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card-text {
+  height: 3rem;
+  overflow: hidden;
+}

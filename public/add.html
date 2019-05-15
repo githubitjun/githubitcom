@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Members</title>
+  <link href="assets/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="navbar navbar-dark navbar-expand-sm bg-dark shadow-sm">
+      <div class="container">
+        <a href="#" class="navbar-brand d-flex justify-content-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="#">Members</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <section class="jumbotron mb-0 bg-white text-center">
+      <div class="container">
+        <h1 class="display-4">New member</h1>
+        <p class="lead text-muted">Add a member~</p>
+        <div>
+          <a href="#" class="btn btn-primary my-2">Members list</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="py-5 bg-light">
+      <form class="container">
+        <div class="row mb-3">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label for="input_name">Member name</label>
+              <input type="text" class="form-control" id="input_name" placeholder="Enter member name">
+            </div>
+            <div class="form-group">
+              <label for="input_bio">Member bio</label>
+              <textarea class="form-control" id="input_bio" cols="80" rows="10" placeholder="Enter member bio"></textarea>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="w-100" for="input_avatar">
+                <span class="d-block mb-2">Member avatar</span>
+                <img class="img-thumbnail w-100" id="myimg" src="/assets/default.png" alt="Member avatar">
+              </label>
+              <input type="file" class="form-control-file" id="input_avatar" aria-describedby="input_avatar_label">
+              <small id="input_avatar_label" class="form-text text-muted">Upload a picture.</small>
+            </div>
+          </div>
+        </div>
+        <button id="save" class="btn btn-primary btn-block">Save</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="py-5 text-muted">
+    <p class="container">
+      <span>this demo &copy; heima
+      <a class="float-right" href="#">Back to top &uparrow;</a>
+    </p>
+  </footer>
+</body>
+<script src="./assets/jquery.js"></script>
+<script>
+  $('#input_avatar').on('change',function(){
+    // console.log($('#input_avatar')[0].files[0]);
+    let url = URL.createObjectURL($('#input_avatar')[0].files[0])
+    $('#myimg').attr('src',url)
+  })
+  //提交数据  注册点击事件
+  $('#save').on('click',function(e){
+    e.preventDefault()
+    //获取填写的数据
+    let name = $('#input_name').val()
+    let bio = $('#input_bio').val()
+    let avatar =$("#input_avatar")[0].files[0]
+    //使用 formData 提交数据
+    let fd =new FormData()
+    fd.append('name',name)
+    fd.append('bio',bio)
+    fd.append('avatar',avatar)
+    $.ajax({
+      type:'post',
+      url:'/api/member-add',
+      data:fd,
+      processData:false,
+      contentType:false,
+      success:res=>{
+        alert(res.message)
+        window.location='index.html'
+        
+      }
+    })
+  })
+
+
+</script>
+</html>
